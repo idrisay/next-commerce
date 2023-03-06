@@ -1,4 +1,4 @@
-import Products from "@/components/Products";
+
 import Head from "next/head";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="max-w-7xl mx-auto">
-        <Products />
+        Welcome to my shop
       </main>
     </>
   );

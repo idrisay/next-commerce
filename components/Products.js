@@ -8,8 +8,6 @@ const Products = () => {
 
   return (
     <div>
-      <button onClick={() => {}}></button>
-      <p>Products</p>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 m-2">
         {loading ? (
           <>Loading..</>
