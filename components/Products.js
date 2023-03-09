@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 
 const Products = () => {
   const { data, error, loading } = useCallApi(
-    "https://api.escuelajs.co/api/v1/products"
+    "http://localhost:3000/products"
   );
 
   return (

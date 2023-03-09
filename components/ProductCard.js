@@ -1,14 +1,14 @@
 import React from "react";
 
 const ProductCard = ({ product }) => {
-  console.log(product?.price);
+  console.log(product);
   return (
-    <div className="w-full max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow flex flex-col justify-between">
+    <div className="w-full max-w-sm mx-auto bg-gray-800 border border-gray-700 rounded-lg shadow flex flex-col justify-between">
       <div>
         <a href={`/products/${product.id}`}>
           <img
             className="p-8 rounded-t-lg"
-            src={product?.images[0]}
+            src={product?.image}
             alt="product image"
           />
         </a>
