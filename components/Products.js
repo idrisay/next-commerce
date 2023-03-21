@@ -3,9 +3,11 @@ import ProductCard from "./ProductCard";
 
 const Products = () => {
   const { data, error, loading } = useCallApi(
-    "http://localhost:3000/products"
+    `${process.env.BACKEND_URL}/products`
   );
 
+
+  console.log(data);
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 m-2">

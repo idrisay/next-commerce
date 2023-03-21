@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import axios from "axios";
 
 const AddNew = () => {
+  // const uniqueId = () => parseInt(Date.now() * Math.random());
   const [selectedCategory, setSelectedCategory] = useState();
   const [newCategory, setNewCategory] = useState({
+    // id: uniqueId(),
     title: "",
     price: "100",
     description: "",
@@ -22,28 +25,57 @@ const AddNew = () => {
     setNewCategory({ ...newCategory, [e.target.id]: e.target.value });
   };
 
-  console.log(newCategory);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log('handleSubmit')
-  }
+    let newElm = {
+      title: newCategory.title,
+      price: newCategory.price,
+      description: newCategory.description,
+      category: selectedCategory.name,
+      brand: newCategory.brand,
+      image_url: newCategory.image_url,
+    };
+
+    console.log(newElm);
+
+    axios.post(`${process.env.BACKEND_URL}/products`, newElm).then((res) => {
+      console.log("ress", res);
+    });
+  };
 
   return (
-    <div className=" flex justify-center h-screen items-center ">
-      <form onSubmit={handleSubmit} className="flex flex-col w-11/12 max-w-md p-4 border-2 rounded-md border-black">
+    <div className="flex justify-center h-screen items-center ">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col w-11/12 max-w-md p-4 border-2 rounded-md border-black"
+      >
         <label htmlFor="title">Title</label>
         <Input
-        required
+          required
           onChange={(e) => handleChange(e)}
           type="text"
           name="Title"
           id="title"
         />
+        <label htmlFor="image_url">Image URL</label>
+        <Input
+          required
+          onChange={(e) => handleChange(e)}
+          type="text"
+          name="image_url"
+          id="image_url"
+        />
+        <label htmlFor="brand">Brand</label>
+        <Input
+          required
+          onChange={(e) => handleChange(e)}
+          type="text"
+          name="brand"
+          id="brand"
+        />
         <label htmlFor="price">Price</label>
         <Input
-        required
+          required
           onChange={(e) => handleChange(e)}
           type="number"
           name="Price"
@@ -57,17 +89,17 @@ const AddNew = () => {
           id="description"
           maxLength="150"
           rows="4"
-          cols="50"
           required
+          styele={{ resize: "none" }}
           className="resize-none"
         />
 
         <label htmlFor="category">Category</label>
         <select
-        required
+          required
           onChange={handleSelectChange}
-          name=""
-          id=""
+          name="category"
+          id="category"
           defaultValue={""}
           className="border-[1px] border-purple-500 rounded-md p-2"
         >
