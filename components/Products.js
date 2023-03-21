@@ -8,11 +8,11 @@ const Products = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 m-2">
-        {products.length === 0 ? (
+      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 m-2">
+        {products.loading ? (
           <>Loading..</>
         ) : (
-          products?.map((item, index) => <ProductCard key={index} product={item} />)
+          products?.data.map((item, index) => <ProductCard key={index} product={item} />)
         )}
       </div>
     </div>

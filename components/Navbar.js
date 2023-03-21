@@ -1,9 +1,11 @@
 import AppContext from "../utils/context";
 import { useContext } from "react";
 import Link from "next/link";
+import SearchProduct from "./SearchProduct";
 
 const Navbar = () => {
-  const { products, setSearchProducts } = useContext(AppContext);
+  const { setSearchProducts, filteredProducts, searchProducts } =
+    useContext(AppContext);
 
   return (
     <nav className="bg-gray-800 flex justify-around w-full">
@@ -16,15 +18,6 @@ const Navbar = () => {
 
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <div className="flex relative">
-                  <input
-                    type="text"
-                    className="rounded-md pl-2"
-                    placeholder="Search"
-                    onChange={(e) => setSearchProducts(e.target.value)}
-                  />
-                  <p className="absolute top-0 right-2 text-gray-500">{products.length}</p>
-                </div>
                 <Link href="/">
                   <i className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     Home
@@ -35,6 +28,26 @@ const Navbar = () => {
                     Products
                   </i>
                 </Link>
+                <div className="flex relative">
+                  <input
+                    type="text"
+                    className="rounded-md pl-2"
+                    placeholder="Search"
+                    onChange={(e) => setSearchProducts(e.target.value)}
+                  />
+
+                  {searchProducts.length && (
+                    <div className="absolute top-8 rounded-md p-2 shadow-2xl right-0 bg-white max-w-md w-screen">
+                      {filteredProducts.loading ? (
+                        <p className="text-center">Loading</p>
+                      ) : (
+                        <SearchProduct
+                          filteredProducts={filteredProducts.data}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
