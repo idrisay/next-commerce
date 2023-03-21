@@ -1,4 +1,10 @@
+import AppContext from '../utils/context'
+import { useContext } from 'react';
+
 const Navbar = () => {
+
+  const { products } = useContext(AppContext);
+
     return (
       <nav className="bg-gray-800 flex justify-around w-full">
         <div className="max-w-7xl mx-auto px-4  sm:px-6 lg:px-8">
