@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => {
   
   return (
     <div className="py-6">
-      <div className=" min-h-[250px] flex w-full bg-white shadow-lg rounded-lg overflow-hidden">
+      <Link href={`/products/${product._id}`} className=" min-h-[250px] flex w-full bg-white shadow-lg rounded-lg overflow-hidden">
         <div
           className="w-1/3 bg-cover"
           style={{
@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
           }}
         ></div>
         <div className="w-2/3 py-4 pl-8 flex flex-col justify-between">
-          <h1 className="text-gray-900 font-bold text-2xl">Backpack</h1>
+          <h1 className="text-gray-900 font-bold text-2xl">{product.title}</h1>
           <p className="mt-2 text-gray-600 text-sm">
             {product?.description?.length > 100 ? (
               <span>{product?.description?.slice(0, 100)}...</span>
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
           </p>
 
           <div className="flex item-center justify-between mt-3">
-            <h1 className="text-gray-700 font-bold text-xl">$220</h1>
+            <h1 className="text-gray-700 font-bold text-xl">${product.price}</h1>
 
             <div className="flex item-center mt-2">
               <svg
@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const Navbar = () => {
     useContext(AppContext);
 
   return (
-    <nav className="bg-gray-800 flex justify-around w-full">
+    <nav className="bg-gray-800 flex justify-around w-full fixed top-0 left-0 h-[8vh]">
       <div className="max-w-7xl mx-auto px-4  sm:px-6 lg:px-8 w-full">
         <div className="flex items-center h-16 w-full">
           <div className="flex items-center justify-between w-full ">
