@@ -1,7 +1,7 @@
 import React from "react";
 
 const SearchProduct = ({ filteredProducts }) => {
-  console.log(filteredProducts);
+  
   return (
     <div>
       <p className="text-right text-gray-500">

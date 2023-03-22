@@ -35,8 +35,7 @@ const Navbar = () => {
                     placeholder="Search"
                     onChange={(e) => setSearchProducts(e.target.value)}
                   />
-
-                  {searchProducts.length && (
+                  {searchProducts.length > 0 && (
                     <div className="absolute top-8 rounded-md p-2 shadow-2xl right-0 bg-white max-w-md w-screen">
                       {filteredProducts.loading ? (
                         <p className="text-center">Loading</p>

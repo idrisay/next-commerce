@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ProductDetails from "@/components/ProductDetails";
+import AppContext from "../../utils/context";
+import { useContext } from "react";
 
 const product = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { products } = useContext(AppContext);
+
+  let product = products?.data.find(x => x._id === id);
+  console.log('id',product)
   
+  if(product?.loading){
+    return (
+      <div>
+        <p>Loading..</p>
+      </div>
+    )
+  }
 
   return (
-    <div>
-      {/* <ProductDetails product={data} /> */}
-    </div>
+    <Suspense fallback={<div>Loading cities...</div>}>
+      <ProductDetails product={product ? product : []} />
+    </Suspense>
   );
 };
 
