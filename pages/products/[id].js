@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
+import AppContext from "@/utils/context";
+import Link from "next/link";
 import ProductDetails from "@/components/ProductDetails";
-import { useCallApi } from "@/utils/api";
-import axios from "axios";
 
 const product = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [data, setData] = useState({});
+  const { products } = useContext(AppContext);
+  console.log({ id, products });
+  let productDetails;
 
-  useEffect(() => {
-    // const { data, error, loading } = useCallApi(
-    //   `${process.env.BACKEND_URL}/products/${id}`
-    // );
-    if (id) {
-      axios.get(`${process.env.BACKEND_URL}/products/${id}`).then((res) => {
-        console.log("ress", res.data);
-        setData(res.data);
-      });
-    }
-  }, [id]);
+  if (id) {
+    productDetails = products?.data.find((item) => item._id === id);
+    console.log({ productDetails });
+  }
 
   return (
     <div>
-      <ProductDetails product={data} />
+      {products?.loading ? (
+        <p>Loading</p>
+      ) : productDetails ? (
+        <ProductDetails product={productDetails} />
+      ) : (
+        <>NotFound</>
+      )}
     </div>
   );
 };

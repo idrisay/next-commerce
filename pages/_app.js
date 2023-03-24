@@ -8,7 +8,9 @@ export default function App({ Component, pageProps }) {
     <>
       <ContextProvider>
         <Navbar />
+        <div className="pt-[8vh] min-h-[94vh]">
         <Component {...pageProps} />
+        </div>
         <Footer />
       </ContextProvider>
     </>
