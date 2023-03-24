@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ProductDetails from "@/components/ProductDetails";
-import { useCallApi } from "@/utils/api";
-import axios from "axios";
+import AppContext from "../../utils/context";
+import { useContext } from "react";
 
 const product = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [data, setData] = useState({});
+  const { products } = useContext(AppContext);
 
-  useEffect(() => {
-    // const { data, error, loading } = useCallApi(
-    //   `${process.env.BACKEND_URL}/products/${id}`
-    // );
-    if (id) {
-      axios.get(`${process.env.BACKEND_URL}/products/${id}`).then((res) => {
-        console.log("ress", res.data);
-        setData(res.data);
-      });
-    }
-  }, [id]);
+  let product = products?.data.find(x => x._id === id);
+  console.log('id',product)
+  
+  if(product?.loading){
+    return (
+      <div>
+        <p>Loading..</p>
+      </div>
+    )
+  }
 
   return (
-    <div>
-      <ProductDetails product={data} />
-    </div>
+    <Suspense fallback={<div>Loading cities...</div>}>
+      <ProductDetails product={product ? product : []} />
+    </Suspense>
   );
 };
 
