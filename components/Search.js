@@ -16,6 +16,7 @@ const Search = () => {
       <input
         type="text"
         value={searchKeyword}
+        placeholder="Search..."
         onChange={(e) => setSearchKeyword(e.target.value)}
         className="bg-gray-800 border-[1px] outline-0 border-white rounded-md text-white w-32 px-2"
       />

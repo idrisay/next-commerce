@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 
 
-const login = () => {
+const Login = () => {
 	const router = useRouter()
   const [credentials, setCredentials] = useState({
     email: "",
@@ -78,7 +78,7 @@ const login = () => {
                     id="password"
                     name="password"
                     required
-                    minlength="5"
+                    minLength="5"
                     onChange={handleChange}
                     type="password"
                     className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
@@ -109,4 +109,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
