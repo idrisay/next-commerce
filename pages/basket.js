@@ -2,28 +2,11 @@ import React, { useContext, useState } from "react";
 import AppContext from "@/utils/context";
 import { MdArrowBackIos } from "react-icons/md";
 
-// const Basket = () => {
-//   const { cart } = useContext(AppContext);
-
-//   return (
-//     <div>
-//       <h2>Basket</h2>
-//       <div>
-//         {cart?.map((product) => (
-//           <div key={product._id}>
-//             <h2>{product.title}</h2>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Basket;
-
 function Index() {
-  const [show, setShow] = useState(true);
   const { cart } = useContext(AppContext);
+
+  const total = cart.reduce((acc, cur) => acc + cur.price, 0);
+
   return (
     <>
       <div>
@@ -42,7 +25,7 @@ function Index() {
                   <div className="w-1/4">
                     <img
                       src="https://cdn.tuk.dev/assets/templates/e-commerce-kit/bestSeller3.png"
-                      alt
+                      alt='product'
                       className="w-full h-full object-center object-cover"
                     />
                   </div>
@@ -88,7 +71,7 @@ function Index() {
                   <div className="w-1/4">
                     <img
                       src="https://cdn.tuk.dev/assets/templates/e-commerce-kit/bestSeller2.png"
-                      alt
+                      alt='product'
                       className="w-full h-full object-center object-cover"
                     />
                   </div>
