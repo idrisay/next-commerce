@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FaTwitter, FaInstagram, FaFacebook } from 'react-icons/fa';
 
@@ -10,19 +11,20 @@ const Footer = () => {
         <div>
           <ul className="flex space-x-4">
             <li>
-              <a href="#">
+              <Link
+               href="#">
                 <FaTwitter />
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link href="#">
                 <FaInstagram />
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link href="#">
                 <FaFacebook />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

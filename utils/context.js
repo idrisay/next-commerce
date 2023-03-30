@@ -14,6 +14,18 @@ const ContextProvider = ({ children }) => {
     error: false,
   });
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [cart, setCart] = useState([])
+
+  const addCart = (product) => {
+    setCart([...cart, product])
+    localStorage.setItem('cart', JSON.stringify([...cart, product]))
+  }
+
+  useEffect(() => {
+    let localStorageCart = JSON.parse(localStorage.getItem('cart'))
+    setCart(localStorageCart)
+  }, [])
+  
 
   useEffect(() => {
     setProducts({ ...products, loading: true });
@@ -56,6 +68,9 @@ const ContextProvider = ({ children }) => {
         setSearchKeyword,
         filteredProducts,
         setFilteredProducts,
+        cart,
+        setCart,
+        addCart
       }}
     >
       {children}
