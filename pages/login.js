@@ -31,9 +31,10 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
 		if(data.message == "Login successful"){
-			router.push("/")
-			localStorage.setItem("access_token",data.token)
+      localStorage.setItem("access_token",data.token)
 			toast.success("Login successfully");
+      router.reload(window.location.pathname)
+			router.push("/")
 		}else {
 			toast.error(data.message);
 		}

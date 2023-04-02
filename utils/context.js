@@ -16,13 +16,32 @@ const ContextProvider = ({ children }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [cart, setCart] = useState([])
 
-  const addCart = (product) => {
-    setCart([...cart, product])
-    localStorage.setItem('cart', JSON.stringify([...cart, product]))
+  const addCart = (product, userId) => {
+    console.log(userId)
+    if(userId){
+      // userId, productId, quantity 
+      fetch(`${process.env.BACKEND_URL}/products/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, productId: product._id, quantity: 1 }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.cart.products);
+          setCart(data.cart.products)
+          localStorage.setItem('cart', JSON.stringify(data.cart.products) )
+        })
+        .catch((error) => console.error(error));
+    }else{
+      setCart([...cart, product])
+      localStorage.setItem('cart', JSON.stringify([...cart, product]) )
+    }
   }
 
   useEffect(() => {
-    let localStorageCart = JSON.parse(localStorage.getItem('cart'))
+    let localStorageCart =  localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
     setCart(localStorageCart)
   }, [])
   
@@ -33,7 +52,7 @@ const ContextProvider = ({ children }) => {
       .then((resp) => resp.json())
       .then((res) => {
         setProducts({ ...products, data: res, loading: false });
-        console.log({res})
+   
       })
       .catch((error) => {
         setProducts({ ...products, data: [], loading: false, error });

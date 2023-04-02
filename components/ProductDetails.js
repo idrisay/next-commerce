@@ -1,12 +1,14 @@
+import AuthContext from "@/utils/authContext";
 import AppContext from "@/utils/context";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 const ProductDetails = ({ product }) => {
   const {addCart} = useContext(AppContext)
+  const {user} = useContext(AuthContext);
 
   const handleAddBasket = () => {
-    addCart(product)
+    addCart(product, user?.id)
   }
 
   return (

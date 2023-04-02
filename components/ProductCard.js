@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const ProductCard = ({ product }) => {
-  console.log(product);
+
   return (
     <div className="w-full max-w-sm mx-auto bg-gray-800 border border-gray-700 rounded-lg shadow flex flex-col justify-between">
       <div>

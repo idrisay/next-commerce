@@ -8,12 +8,12 @@ const product = () => {
   const router = useRouter();
   const { id } = router.query;
   const { products } = useContext(AppContext);
-  console.log({ id, products });
+
   let productDetails;
 
   if (id) {
     productDetails = products?.data.find((item) => item._id === id);
-    console.log({ productDetails });
+
   }
 
   return (

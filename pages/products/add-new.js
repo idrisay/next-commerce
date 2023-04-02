@@ -21,7 +21,7 @@ const AddNew = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value, e.target.id);
+  
     setNewCategory({ ...newCategory, [e.target.id]: e.target.value });
   };
 
@@ -36,10 +36,8 @@ const AddNew = () => {
       image_url: newCategory.image_url,
     };
 
-    console.log(newElm);
-
     axios.post(`${process.env.BACKEND_URL}/products`, newElm).then((res) => {
-      console.log("ress", res);
+
     });
   };
 
