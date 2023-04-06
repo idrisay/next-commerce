@@ -17,7 +17,6 @@ const ContextProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   const addCart = (product, userId) => {
-    console.log(userId)
     if(userId){
       // userId, productId, quantity 
       fetch(`${process.env.BACKEND_URL}/products/cart`, {
@@ -29,7 +28,6 @@ const ContextProvider = ({ children }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.cart.products);
           setCart(data.cart.products)
           localStorage.setItem('cart', JSON.stringify(data.cart.products) )
         })

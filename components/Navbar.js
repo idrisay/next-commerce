@@ -5,7 +5,7 @@ import { SlBasket } from "react-icons/sl";
 
 const Navbar = () => {
   return (
-    <nav className="fixed h-[8vh] bg-gray-800 flex justify-around w-full">
+    <nav className="fixed h-[8vh] bg-gray-800 flex justify-around w-full z-20">
       <div className="max-w-7xl mx-auto px-4  sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">

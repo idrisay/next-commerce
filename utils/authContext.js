@@ -21,7 +21,6 @@ const AuthContextProvider = ({ children }) => {
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
-        console.log(data?.id)
         getUserCart(data.id)
       })
       .catch((error) => console.error(error));
@@ -29,8 +28,6 @@ const AuthContextProvider = ({ children }) => {
 
 
   const getUserCart = (userId) => {
-    console.log('guc')
-    console.log({userId})
     fetch(`${process.env.BACKEND_URL}/products/cart/${userId}`)
       .then((response) => response.json())
       .then((data) => {
