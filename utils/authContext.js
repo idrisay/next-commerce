@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+     
         if(data.loggedIn){
           setUser(data);
           getUserCart(data.id)

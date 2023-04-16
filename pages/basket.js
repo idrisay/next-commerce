@@ -30,7 +30,7 @@ function Index() {
       let res = await response.json();
       let newCart = await getUserCart(user.id)
       setCart(newCart.cart.products)
-      toast.success('Product delete success')
+      toast.success('Product has been deleted successfully.')
     }else{
     toast.error('Something went wrong!')
     }
