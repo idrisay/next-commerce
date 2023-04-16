@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import AppContext from "@/utils/context";
 import AuthContext from "@/utils/authContext";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import Head from "next/head";
 import { toast } from "react-toastify";
 
@@ -9,13 +10,34 @@ function Index() {
   const { cart, setCart, products } = useContext(AppContext);
   const { user, getUserCart } = useContext(AuthContext);
 
-  const productIds = cart.map((item) => item.productId);
+  const productsInCart = cart.map((item) => {
+    let product = products.data.find(
+      (product) => product._id === item.productId
+    );
+    // product.quantity = item.quantity
+    let productWithQuantity = { ...product, quantity: item.quantity };
 
-  const productsInCart = productIds.map((id) => {
-    return products.data.find((product) => product._id === id);
+    return productWithQuantity;
   });
 
-  const total = productsInCart.reduce((acc, cur) => acc + cur?.price, 0);
+  const handleQuantity = async (quantity, prod_id) => {
+    let response = await fetch(`${process.env.BACKEND_URL}/products/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user.id, productId: prod_id, quantity }),
+    });
+    response = await response.json();
+
+    let newCart = await getUserCart(user.id);
+    setCart(newCart.cart.products);
+  };
+
+  const total = productsInCart.reduce(
+    (acc, cur) => acc + cur?.price * cur?.quantity,
+    0
+  );
 
   const handleRemove = async (prod_id) => {
     let response = await fetch(`${process.env.BACKEND_URL}/products/cart`, {
@@ -27,12 +49,12 @@ function Index() {
     });
 
     if (response.ok) {
-      let res = await response.json();
-      let newCart = await getUserCart(user.id)
-      setCart(newCart.cart.products)
-      toast.success('Product has been deleted successfully.')
-    }else{
-    toast.error('Something went wrong!')
+      await response.json();
+      let newCart = await getUserCart(user.id);
+      setCart(newCart.cart.products);
+      toast.success("Product has been deleted successfully.");
+    } else {
+      toast.error("Something went wrong!");
     }
   };
 
@@ -46,29 +68,55 @@ function Index() {
       </Head>
       <div className="flex bg-slate-200 h-full">
         <div className="w-2/3 overflow-auto h-[86vh] p-4">
-          {productsInCart?.map((product, index) => (
-            <div key={index}>
-              <div className="relative flex m-4 items-center">
-                <div className="w-1/3 flex justify-center">
-                  <img src={`${product?.image}`} alt="" className="w-40" />
-                </div>
-                <div className="w-2/3 flex flex-col space-y-4">
-                  <h2>{product?.title}</h2>
-                  <p>${product?.price}</p>
-                  <p className="text-sm text-gray-400">
-                    {product?.description}
-                  </p>
-                </div>
-                <div className="absolute right-0 bottom-0">
-                  <RiDeleteBin5Line
-                    onClick={() => handleRemove(product?._id)}
-                    className="text-red-500 text-xl cursor-pointer"
-                  />
-                </div>
-              </div>
-              <hr className="h-px my-2 bg-black border-0" />
+          {productsInCart.length == 0 ? (
+            <div className="h-full w-full flex flex-col justify-center">
+              <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" />
+              <p className="text-center">There is no items in your cart.</p>
             </div>
-          ))}
+          ) : (
+            productsInCart?.map((product, index) => (
+              <div key={index}>
+                <div className="relative flex m-4 items-center">
+                  <div className="w-1/3 flex justify-center">
+                    {product?.image && (
+                      <img src={`${product?.image}`} alt="" className="w-40" />
+                    )}
+                  </div>
+                  <div className="w-2/3 flex flex-col space-y-4">
+                    <h2 className="mr-16">{product?.title}</h2>
+                    <p>${product?.price}</p>
+                    <p className="text-sm text-gray-400">
+                      {product?.description}
+                    </p>
+                  </div>
+                  <div className="absolute right-0 bottom-0">
+                    <RiDeleteBin5Line
+                      onClick={() => handleRemove(product?._id)}
+                      className="text-red-500 text-xl cursor-pointer"
+                    />
+                  </div>
+                  <div className="absolute right-0 top-0 flex items-center bg-white rounded-sm px-1">
+                    <AiOutlineMinus
+                      className={`text-sm ${
+                        product.quantity === 1
+                          ? "text-gray-300"
+                          : "text-black cursor-pointer"
+                      }`}
+                      onClick={() =>
+                        product.quantity > 1 && handleQuantity(-1, product?._id)
+                      }
+                    />
+                    <p className="mx-2">{product.quantity}</p>
+                    <AiOutlinePlus
+                      className="cursor-pointer text-sm"
+                      onClick={() => handleQuantity(1, product?._id)}
+                    />
+                  </div>
+                </div>
+                <hr className="h-px my-2 bg-black border-0" />
+              </div>
+            ))
+          )}
         </div>
         <div className=" static h-[86vh] bg-red-100 w-1/3 ">
           <div className="sticky top-[8vh] py-5 h-full flex flex-col justify-end items-end p-4">
@@ -84,3 +132,7 @@ function Index() {
 }
 
 export default Index;
+
+{
+  /* condition ? 'asdasd' : 'asdasdsasdasd' */
+}
