@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import AppContext from "@/utils/context";
-
+import AuthContext from "@/utils/authContext";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Head from "next/head";
+import { toast } from "react-toastify";
 
 function Index() {
-  const { cart, products } = useContext(AppContext);
+  const { cart, setCart, products } = useContext(AppContext);
+  const { user, getUserCart } = useContext(AuthContext);
 
   const productIds = cart.map((item) => item.productId);
 
@@ -15,8 +17,23 @@ function Index() {
 
   const total = productsInCart.reduce((acc, cur) => acc + cur?.price, 0);
 
-  const handleRemove = (prod_id) => {
-    console.log(prod_id);
+  const handleRemove = async (prod_id) => {
+    let response = await fetch(`${process.env.BACKEND_URL}/products/cart`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user.id, productId: prod_id }),
+    });
+
+    if (response.ok) {
+      let res = await response.json();
+      let newCart = await getUserCart(user.id)
+      setCart(newCart.cart.products)
+      toast.success('Product delete success')
+    }else{
+    toast.error('Something went wrong!')
+    }
   };
 
   return (

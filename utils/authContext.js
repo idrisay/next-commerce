@@ -30,15 +30,12 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
 
-  const getUserCart = (userId) => {
-    fetch(`${process.env.BACKEND_URL}/products/cart/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem('cart', JSON.stringify(data.cart.products) )
-      })
-      .catch((error) => console.error(error));
+  const getUserCart = async (userId) => {
+    const response = await fetch(`${process.env.BACKEND_URL}/products/cart/${userId}`);
+    const data = await response.json();
+    localStorage.setItem('cart', JSON.stringify(data.cart.products))
+    return data;
   }
-
   
 
   return (
@@ -46,6 +43,7 @@ const AuthContextProvider = ({ children }) => {
       value={{
         user,
         setUser,
+        getUserCart
       }}
     >
       {children}
