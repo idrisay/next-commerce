@@ -20,8 +20,11 @@ const AuthContextProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUser(data);
-        getUserCart(data.id)
+        console.log(data)
+        if(data.loggedIn){
+          setUser(data);
+          getUserCart(data.id)
+        }
       })
       .catch((error) => console.error(error));
   }, []);

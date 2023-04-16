@@ -14,21 +14,18 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center">
-            <div>
-              <Link href="/login">
-                <BsPersonCircle className="h-8 text-white text-xl" />
-              </Link>
-            </div>
-            <div className="mr-4 space-x-4">
-              <Link href="/products">
-                <i className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Products
-                </i>
-              </Link>
-            </div>
+            <Link
+              className="mr-4 space-x-4 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              href="/products"
+            >
+              Products
+            </Link>
             <Search />
-            <Link href='/basket' >
+            <Link href="/basket">
               <SlBasket className="text-white text-2xl ml-4 hover:text-orange-700" />
+            </Link>
+            <Link href="/login" className="ml-4">
+              <BsPersonCircle className="h-8 text-white text-xl hover:text-orange-700" />
             </Link>
           </div>
         </div>
